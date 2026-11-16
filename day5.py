@@ -48,7 +48,8 @@ def main():
     ax = frame.plot(figsize=(12, 6), title='Day 5: Out-of-sample portfolio comparison')
     ax.set(ylabel='Portfolio value ($)', xlabel='Date')
     ax.figure.tight_layout()
-    ax.figure.savefig(str(out / 'portfolio_comparison.png'), dpi=120)
+    chart_path = out.resolve() / "portfolio_comparison.png"
+    ax.figure.savefig(str(chart_path), format="png", dpi=120)
     plt.close(ax.figure)
     print(f'Saved results to {out.resolve()}')
 
