@@ -37,14 +37,22 @@ def main():
         fig, ax = plt.subplots(figsize=(11, 5))
         ax.plot(equity.index, equity.ml_equity, label='XGBoost long/cash')
         ax.plot(equity.index, equity.hold_equity, label='Buy and hold')
+        
         ax.set(title=f'{ticker}: walk-forward out-of-sample', ylabel='Simulated portfolio ($)')
         ax.legend()
         fig.tight_layout()
-        fig.savefig(out / f'{ticker}_ml_vs_hold.png', dpi=120)
+
+        chart_path = out / f"{str(ticker).strip()}_ml_vs_hold.png"
+        fig.savefig(str(chart_path), format="png", dpi=120)
         plt.close(fig)
+
         print(f"{ticker}: ML {report['ml']['return_pct']}% | Hold {report['buy_hold']['return_pct']}% | AUC {report['roc_auc']}")
-    (out / 'summary.json').write_text(json.dumps({'configuration': vars(args), 'results': reports}, indent=2))
+
+    (out / 'summary.json').write_text(
+        json.dumps({'configuration': vars(args), 'results': reports}, indent=2)
+    )
     print(f'Saved to {out}')
+
 
 if __name__ == '__main__':
     main()
